@@ -1,8 +1,9 @@
 name: Dependabot and semgrep
 
 on:
-  schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
+  push:
+    branches:
+      - main
 
 jobs:
   update-and-scan:
