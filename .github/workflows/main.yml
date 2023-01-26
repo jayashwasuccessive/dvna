@@ -1,0 +1,22 @@
+name: Dependabot and semgrep
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs every day at midnight
+
+jobs:
+  update-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Update dependencies
+      run: |
+        dependabot --update-config=python
+        git push --set-upstream origin dependabot/${{ env.BRANCH }}
+
+    - name: Run semgrep
+      run: |
+        semgrep --config myconfig.yml --python
